@@ -6,6 +6,11 @@ Note: Install the tesseract training dataset from https://github.com/UB-Mannheim
 
 Add "C:\\Program Files\\Tesseract-OCR\\tesseract.exe" to your PATH environment variable
 
+To stop program
+
+HotKey: Hold on (esc) 
+
+
 Find the location where the counting bot will search and replace countLocation.png with your similar version.
 
 Example countLocation.png
