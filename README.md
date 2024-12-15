@@ -1,7 +1,9 @@
 Ensure required packages are installed:
+
 pip install pynput imagehash opencv-python numpy pyautogui pillow pytesseract keyboard
 
 Note: Install the tesseract training dataset from https://github.com/UB-Mannheim/tesseract/wiki
+
 Add "C:\\Program Files\\Tesseract-OCR\\tesseract.exe" to your PATH environment variable
 
 Find the location where the counting bot will search and replace countLocation.png with your similar version.
