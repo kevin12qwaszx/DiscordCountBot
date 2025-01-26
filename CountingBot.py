@@ -20,7 +20,7 @@ class AutoTextBot:
         pytesseract.pytesseract.tesseract_cmd = self.tesseract_path
 
     @staticmethod
-    def locate_image(image_path, confidence=0.9):
+    def locate_image(image_path, confidence=0.99):
         try:
             location = pyautogui.locateOnScreen(image_path, confidence=confidence)
             if location:
@@ -69,30 +69,36 @@ class AutoTextBot:
 
             location = self.locate_image(image_path_match)
             if not location:
-                break
+                pass
+                #break
+            else:
+                    
+                x, y, width, height = int(location.left), int(location.top )- 150, 350, 200
+                screenshot = pyautogui.screenshot(region=(x, y, width, height))
+                screenshot_path = r'boxofCompare.png'
+                screenshot.save(screenshot_path)
 
-            x, y, width, height = int(location.left), int(location.top )- 100, 350, 200
-            screenshot = pyautogui.screenshot(region=(x, y, width, height))
-            screenshot_path = r'boxofCompare.png'
-            screenshot.save(screenshot_path)
+                user_icon_path = userIcon 
+                has_image = self.contains_image(user_icon_path, screenshot_path)
 
-            user_icon_path = userIcon 
-            has_image = self.contains_image(user_icon_path, screenshot_path)
+                if not has_image:
+                    print("This is the line you thinking about")
 
-            if not has_image:
-                text = self.extract_text_from_image(screenshot_path)
-                print("Extracted text:", text)
+                    text = self.extract_text_from_image(screenshot_path)
+                    print("Extracted text:", text)
 
-                try:
-                    numbers = [int(item) for item in text.split() if item.isdigit()]
-                    number_to_type = numbers[0] + 1 if numbers else 1
-
-                    pyautogui.click(x + width / 2, y + 100)
-                    keyboard.write(str(number_to_type))
-                    keyboard.press_and_release('enter')
-                    pyautogui.moveTo(0, 0)
-                except Exception as e:
-                    print("Error typing or clicking:", e)
+                    try:
+                        numbers = [int(item) for item in text.split() if item.isdigit()]
+                        number_to_type = numbers[0] + 1 if numbers else "1"
+                        if isinstance(number_to_type, int):
+                            pyautogui.click(x + width / 2, y + 50)
+                            keyboard.write(str(number_to_type))
+                            keyboard.press_and_release('enter')
+                            pyautogui.moveTo(0, 0)
+                        else:
+                            pass
+                    except Exception as e:
+                        print("Error typing or clicking:", e)
 
             time.sleep(5)
 
